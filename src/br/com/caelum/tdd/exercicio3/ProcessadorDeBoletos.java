@@ -10,4 +10,5 @@ public class ProcessadorDeBoletos {
 			fatura.getPagamentos().add(pagamento);
 		}
 	}
+	
 }

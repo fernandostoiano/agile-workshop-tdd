@@ -1,6 +1,7 @@
 package br.com.caelum.tdd.exercicio3;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,5 +31,28 @@ public class ProcessadorDeBoletosTest {
 		assertEquals(2, f.getPagamentos().size());
 		assertEquals(new Pagamento(200.0, MeioDePagamento.BOLETO), f.getPagamentos().get(0));
 		assertEquals(new Pagamento(500.0, MeioDePagamento.BOLETO), f.getPagamentos().get(1));
+	}
+	
+	@Test
+	public void deveGerarUmaFaturaPaga() throws Exception {
+		
+		Fatura fatura = new Fatura("Master SAP", 10000.0);
+		List<Boleto> boletosPagos = Arrays.asList(new Boleto(5000.0), new Boleto(5000.0));
+		
+		new ProcessadorDeBoletos().processa(boletosPagos, fatura);
+		
+		assertEquals(2, fatura.getPagamentos().size());
+		assertTrue(fatura.isPago());
+	}
+	
+	@Test
+	public void deveGerarUmaFaturaPendente() throws Exception {
+		Fatura fatura = new Fatura("Master SAP", 10000.0);
+		List<Boleto> boletosPagos = Arrays.asList(new Boleto(5000.0));
+		
+		new ProcessadorDeBoletos().processa(boletosPagos, fatura);
+		
+		assertEquals(1, fatura.getPagamentos().size());
+		assertTrue(!fatura.isPago());
 	}
 }

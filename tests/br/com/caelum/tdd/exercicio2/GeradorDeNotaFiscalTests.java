@@ -12,13 +12,15 @@ public class GeradorDeNotaFiscalTests {
 	private EnviadorDeEmail email;
 	private NotaFiscalDao dao;
 	private GeradorDeNotaFiscal gerador;
+	private Sap sap;
 
 	@Before
 	public void setUp() {
 		email = mock(EnviadorDeEmail.class);
 		dao = mock(NotaFiscalDao.class);
+		sap = mock(Sap.class);
 
-		gerador = new GeradorDeNotaFiscal(email, dao);
+		gerador = new GeradorDeNotaFiscal(email, dao, sap);
 	}
 	
 	@Test
@@ -46,5 +48,15 @@ public class GeradorDeNotaFiscalTests {
 		NotaFiscal nf = gerador.gera(fatura);
 		
 		verify(dao).persiste(nf);
+	}
+	
+	@Test
+	public void deveEnviarSAPAoGerarNotaFiscal() throws Exception {
+		
+		Fatura fatura = new Fatura(1000, "Suvinil do Brasil");
+		
+		NotaFiscal nf = gerador.gera(fatura);
+		
+		verify(sap).envia(nf);
 	}
 }

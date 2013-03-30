@@ -30,12 +30,17 @@ public class Fatura {
 	}
 
 	public boolean isPago() {
+		
+		double valorPago = 0.0;
+		
+		for(Pagamento pagamento : this.getPagamentos()) {
+			
+			valorPago = valorPago + pagamento.getValor();
+			
+		}
+		pago = valorPago == this.getValor();
+		
 		return pago;
 	}
-
-	public void setPago(boolean pago) {
-		this.pago = pago;
-	}
-	
 	
 }

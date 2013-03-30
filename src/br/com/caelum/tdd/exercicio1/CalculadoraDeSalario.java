@@ -3,6 +3,7 @@ package br.com.caelum.tdd.exercicio1;
 import static br.com.caelum.tdd.exercicio1.Cargo.DBA;
 import static br.com.caelum.tdd.exercicio1.Cargo.DESENVOLVEDOR;
 import static br.com.caelum.tdd.exercicio1.Cargo.TESTER;
+import static br.com.caelum.tdd.exercicio1.Cargo.GERENTE;
 
 public class CalculadoraDeSalario {
 
@@ -16,7 +17,26 @@ public class CalculadoraDeSalario {
 			return quinzeOuVinteCincoPorcento(funcionario);
 		}
 		
+		if(GERENTE.equals(funcionario.getCargo())) {
+			return vinteOuQuinzePorcento(funcionario);
+		}
+		
 		throw new RuntimeException("funcionario invalido");
+	}
+
+	private double vinteOuQuinzePorcento(Funcionario funcionario) {
+		double salario = 0.0;
+		
+		if(funcionario.getSalarioBase() > 5000.0) {
+		
+			salario = funcionario.getSalarioBase() * 0.8;
+		
+		} else {
+			salario = funcionario.getSalarioBase() * 0.85;
+		
+		}
+		
+		return salario;
 	}
 
 	private double dezOuVintePorcento(Funcionario employee) {
